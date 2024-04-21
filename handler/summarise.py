@@ -2,11 +2,11 @@
 
 import os
 
-from slack_bolt import Ack, Say
+from slack_bolt import Ack, Respond
 
 from api.rapidanalysis import api_call
 
-def summarise(say: Say, command: dict, ack: Ack):
+def summarise(respond: Respond, command: dict, ack: Ack):
     """Responds to the user with a summary of the text provided
 
     By default returns text equal to ~20% of the length of the original
@@ -30,4 +30,4 @@ def summarise(say: Say, command: dict, ack: Ack):
         token       = os.getenv('RAPID_API_KEY')
     )
 
-    say(f"Your summary <@{command['user_id']}>:\n{summary}")
+    respond(f"Your summary <@{command['user_id']}>:\n{summary}")
