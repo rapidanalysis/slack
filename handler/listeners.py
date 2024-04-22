@@ -3,6 +3,7 @@
 from slack_bolt import App, Ack
 
 from .greetings import greetings
+from .recap import recap
 
 def respond_to_slack(ack: Ack):
     """Responds to slack within 3 seconds.
@@ -25,4 +26,9 @@ def register_listeners(app: App):
     app.command("/greetings")(
         ack = respond_to_slack,
         lazy = [greetings]
+    )
+
+    app.command("/recap")(
+        ack = respond_to_slack,
+        lazy = [recap]
     )
