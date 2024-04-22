@@ -34,7 +34,7 @@ def recap(command: dict, respond: Respond, client: WebClient):
         'percent': 0.2,
         'fulltext': ''.join(map(
             lambda msg: _format_message(msg, usernames),
-            msgs
+            reversed(msgs) # supply messages from oldest to newest
         )),
     }
 
