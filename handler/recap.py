@@ -30,7 +30,7 @@ def recap(command: dict, respond: Respond, client: WebClient):
     body = {
         'percent': 0.2,
         'fulltext': ''.join(map(
-            lambda msg: usernames[msg['user_id']] + "\n" + msg['text'],
+            lambda msg: _format_message(msg, usernames),
             msgs
         )),
     }
@@ -61,3 +61,23 @@ def _get_message_history(channel_id: str, client: WebClient):
 
     return channel_history
 
+def _format_message(msg: dict, usernames: dict):
+    """Prepend messager name, and convert mentions
+
+    Prepends the message text with the messager, and convert all
+    mentions (<@user_id>, with user_id starting with U or W) to be the
+    user's name.
+
+    Args:
+        msg (dict): The message payload.
+        usernames (dict): A map for user id's to name.
+    """
+
+    # convert all mentions to names <@user_id> -> name
+    msg_mentions = re.sub(
+        r"<@((U|W)[A-z0-9]+)>",
+        lambda match: usernames[match.group(1)],
+        msg['text']
+    )
+
+    return usernames[msg['user_id']] + "\n" + msg_mentions
