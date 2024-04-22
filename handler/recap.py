@@ -19,7 +19,6 @@ def recap(command: dict, respond: Respond, client: WebClient):
         say (Say): Sends a message to incomming command's channel
         command (dict): the message payload
     """
-    print(command)
     msgs: list = _get_message_history(command['channel_id'], client)
 
     usernames = {}
