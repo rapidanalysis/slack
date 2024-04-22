@@ -24,7 +24,11 @@ def recap(command: dict, respond: Respond, client: WebClient):
     usernames = {}
 
     for member in client.users_list().get('members'):
-        usernames[member['id']] = member['real_name']
+        if 'real_name' in member:
+            usernames[member['id']] = member['real_name']
+        else:
+            # Account is most likely deactivated so just use the name
+            usernames[member['id']] = member['name']
 
     body = {
         'percent': 0.2,
@@ -79,4 +83,4 @@ def _format_message(msg: dict, usernames: dict):
         msg['text']
     )
 
-    return usernames[msg['user_id']] + "\n" + msg_mentions
+    return usernames[msg['user']] + "\n" + msg_mentions
