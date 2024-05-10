@@ -45,6 +45,8 @@ def question(command: dict, respond: Respond, client: WebClient):
         token       = os.getenv('RAPID_API_KEY')
     )
 
+    summary = '\n'.join(summary)
+
     respond(f"Your summary <@{command['user_id']}>:\n{summary}")
 
 def _get_message_history(channel_id: str, client: WebClient):
