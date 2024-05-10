@@ -19,7 +19,8 @@ def summarise(respond: Respond, command: dict, ack: Ack):
         command (dict): the message payload
     """
     if command['text'] is None:
-        ack()
+        ack("Usage: /summarise *text")
+        return
 
     body = {
         'fulltext': command['text'],
