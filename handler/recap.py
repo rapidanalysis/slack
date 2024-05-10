@@ -47,7 +47,7 @@ def recap(command: dict, respond: Respond, client: WebClient):
     respond(f"Your summary <@{command['user_id']}>:\n{summary}")
 
 def _get_message_history(channel_id: str, client: WebClient):
-    """Gets Slack channel history from the past 90 days
+    """Gets Slack channel history from the last 100 messages
 
     Args:
         command (dict): the command payload
