@@ -18,7 +18,8 @@ def question(command: dict, ack: Ack, respond: Respond, client: WebClient):
     """
     ack()
 
-        respond("Usage: /recap *prompt*")
+    if command['text'] is None or command['text'] == '':
+        respond("Usage: /question _prompt_")
         return
 
     msgs: list = _get_message_history(command['channel_id'], client)
