@@ -3,20 +3,21 @@
 import os
 import re
 
-from slack_bolt import Respond
+from slack_bolt import Ack, Respond
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
 from api.rapidanalysis import api_call
 
-def question(command: dict, respond: Respond, client: WebClient):
+def question(command: dict, ack: Ack, respond: Respond, client: WebClient):
     """Responds to the user with a response to the given prompt
 
     Args:
         say (Say): Sends a message to incomming command's channel
         command (dict): the message payload
     """
-    if command['text'] is None:
+    ack()
+
         respond("Usage: /recap *prompt*")
         return
 
