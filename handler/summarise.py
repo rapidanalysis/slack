@@ -18,8 +18,8 @@ def summarise(respond: Respond, command: dict, ack: Ack):
         say (Say): Sends a message to incomming command's channel
         command (dict): the message payload
     """
-    if command['text'] is None:
-        ack("Usage: /summarise *text")
+    if command['text'] is None or command['text'] == '':
+        ack("Usage: /summarise _text_")
         return
 
     body = {
