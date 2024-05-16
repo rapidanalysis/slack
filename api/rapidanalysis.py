@@ -21,7 +21,7 @@ def api_call(
         payload (dict): The payload to be sent with the request.
 
     Returns:
-        The 'Output' object returned by RapidAnalysis or None if the
+        The 'output' object returned by RapidAnalysis or None if the
             request failed.
     """
 
@@ -41,9 +41,12 @@ def api_call(
 
     body_json: dict = json.loads(res.data.decode('utf-8'))
 
+    # Force dict to be case-insensitive
+    body_json = {key.casefold(): val for key, val in body_json.items()}
+
     # check if request succeeded, and a vaild response received
     if (res.status != 200 or
-        "Output" not in body_json):
+        "output" not in body_json):
         return None
 
-    return body_json["Output"]
+    return body_json["output"]
