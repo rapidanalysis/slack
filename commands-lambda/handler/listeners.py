@@ -8,7 +8,7 @@ from .recap import recap
 from .summarise import summarise
 
 def respond_to_slack(ack: Ack):
-    """Responds to slack within 3 seconds.
+    """Acknowledges slack command after alongside response
 
     Args:
         ack (Ack): Function to acknowledge incoming event.
@@ -20,7 +20,7 @@ def register_listeners(app: App):
 
     AWS Lambda sometimes terminates after returning a HTTP response, so
     uses lazy listeners to acknowledge after listener function is
-    complete. Still requires listener method to finish within 3 seconds.
+    complete.
 
     Args:
         app (App): the Slack App
