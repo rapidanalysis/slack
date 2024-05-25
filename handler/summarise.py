@@ -1,8 +1,10 @@
 """Summarises text received from the user"""
 
 import os
+from urllib.parse import ParseResult, urlparse, urlunparse
 
 from slack_bolt import Ack, Respond
+import urllib3
 
 from api.rapidanalysis import api_call
 
@@ -16,13 +18,31 @@ def summarise(respond: Respond, command: dict, ack: Ack):
         say (Say): Sends a message to incomming command's channel
         command (dict): the message payload
     """
-    if command['text'] is None:
-        ack()
+    if command['text'] is None or command['text'] == '':
+        ack("Usage: /summarise _text_")
+        return
 
     body = {
         'fulltext': command['text'],
         'percent': 0.2,
     }
+
+    # check for pastebin link
+    parsed: ParseResult = urlparse(url=command['text'])
+    if parsed.hostname == 'pastebin.com':
+        http = urllib3.PoolManager()
+
+        headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        }
+
+        raw_path: str = urlunparse(parsed._replace(path='raw' + parsed.path))
+
+        res: urllib3.HTTPResponse = http.request('GET', raw_path,
+                                                    headers = headers)
+
+        body['fulltext'] = res.data.decode('utf-8')
 
     summary = api_call(
         api_method  = 'text/to-summary',
