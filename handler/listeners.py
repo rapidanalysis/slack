@@ -4,6 +4,7 @@ from slack_bolt import App, Ack
 
 from .greetings import greetings
 from .question import question
+from .recap import recap
 from .summarise import summarise
 
 def respond_to_slack(ack: Ack):
@@ -28,10 +29,15 @@ def register_listeners(app: App):
         ack = respond_to_slack,
         lazy = [greetings]
     )
-
+  
     app.command("/question")(
         ack = respond_to_slack,
         lazy = [question]
+    )
+    
+    app.command("/recap")(
+        ack = respond_to_slack,
+        lazy = [recap]
     )
 
     app.command("/summarise")(
